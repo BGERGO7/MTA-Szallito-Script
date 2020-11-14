@@ -1,0 +1,31 @@
+local vehicleSpot = {
+	[1] = {2053,1536,10.6, createColCuboid(2053,1536,10.6,10,10,10)}
+}
+
+local jobMarker = createMarker(2036.8,1538.9,10.6, 1)
+
+local deliveryVehID = 414
+
+addEventHandler("onMarkerHit", resourceRoot, 
+
+function(hitElement, mDim) 
+	if(mDim) then
+		if(source == jobMarker) then
+			if(getElementType(hitElement) == "player") then
+				if not (getElementData(hitElement, "jobVehicle")) then
+					for i, spot in pairs(vehicleSpot) do
+						local vehicleInSpot = getElementWithinColShape(spot[4], "vehicle")
+						if(#vechicleInSpot == nil) then
+							local jobVehicle = createVehicle(deliveryVehID, spot[1], spot[2], spot[3])
+							setElementData(hitElement, "jobVehicle")
+							outputChatBox("Jarmu letrehozva")
+							isVehicle = true
+							break;
+						end
+					end 
+				end
+			end
+		end
+	end
+end
+);
